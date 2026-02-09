@@ -1,0 +1,7 @@
+{
+  "name": "Netflix Style Online",
+  "author": "You",
+  "version": "1.0.0",
+  "description": "Онлайн просмотр фильмов и сериалов",
+  "type": "plugin"
+}

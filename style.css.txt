@@ -1,0 +1,36 @@
+.netflix-page {
+    background: #141414;
+    color: white;
+    padding: 20px;
+}
+
+.netflix-row {
+    margin-bottom: 30px;
+}
+
+.netflix-items {
+    display: flex;
+    overflow-x: auto;
+}
+
+.netflix-card {
+    width: 160px;
+    margin-right: 12px;
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+.netflix-card:hover {
+    transform: scale(1.1);
+}
+
+.netflix-card img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+.netflix-card-title {
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: center;
+}
