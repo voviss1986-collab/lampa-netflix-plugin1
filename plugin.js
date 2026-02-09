@@ -1,67 +1,46 @@
 (function () {
     'use strict';
 
-    if (!window.Lampa) return;
-
-    const API_PLAYLIST = 'https://example.com/playlist.json';
-
-    let playlist = [];
-
-    function loadPlaylist() {
-        return fetch(API_PLAYLIST)
-            .then(r => r.json())
-            .then(data => playlist = data)
-            .catch(() => Lampa.Noty.show('Ошибка загрузки плейлиста'));
+    if (!window.Lampa) {
+        console.log('Lampa not found');
+        return;
     }
 
-    function render() {
+    const pluginName = 'netflix_test_plugin';
+
+    function openPage() {
         const page = document.createElement('div');
-        page.className = 'netflix-page';
+        page.style.background = '#141414';
+        page.style.color = '#fff';
+        page.style.padding = '30px';
 
-        playlist.forEach(category => {
-            const row = document.createElement('div');
-            row.className = 'netflix-row';
-            row.innerHTML = `<h2>${category.title}</h2>`;
-
-            const items = document.createElement('div');
-            items.className = 'netflix-items';
-
-            category.items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'netflix-card';
-                card.innerHTML = `
-                    <img src="${item.poster}">
-                    <div class="netflix-card-title">${item.title}</div>
-                `;
-
-                card.onclick = () => {
-                    Lampa.Player.play({
-                        title: item.title,
-                        url: item.stream,
-                        poster: item.poster
-                    });
-                };
-
-                items.appendChild(card);
-            });
-
-            row.appendChild(items);
-            page.appendChild(row);
-        });
+        page.innerHTML = `
+            <h1>🎬 Плагин работает</h1>
+            <p>Если ты видишь этот экран — плагин успешно загружен.</p>
+            <p>Среда: <b>${Lampa.Platform.tv() ? 'TV' : 'Browser'}</b></p>
+            <p>Версия Lampa: <b>${Lampa.Version}</b></p>
+        `;
 
         Lampa.Activity.push({
-            title: 'Онлайн кино',
+            title: 'Тест плагина',
             component: 'plugin',
             page: page
         });
     }
 
-    function start() {
-        loadPlaylist().then(render);
-    }
+    Lampa.Plugin.add(pluginName, {
+        name: 'Тест Netflix-плагина',
+        description: 'Проверка работы в браузере',
+        version: '0.1',
 
-    Lampa.Listener.follow('app', e => {
-        if (e.type === 'ready') start();
+        onStart: function () {
+            console.log('[Plugin] started');
+
+            Lampa.Menu.add({
+                title: '🧪 Тест плагина',
+                onSelect: openPage
+            });
+        }
     });
 
 })();
